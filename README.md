@@ -13,7 +13,7 @@
 ✅**Berikut setup:**
 1. Install Docker Desktop, dan pastikan WSL menyala secara otomatis saat docker desktop menyala.
 
-2\. Git clone <repo>. Pastikan untuk mengingat path tempat anda meng-clone repo.
+2. Git clone <repo>. Pastikan untuk mengingat path tempat anda meng-clone repo.
 
 3\. Cd ke file path, dan lakukan: docker compose up -d
 
