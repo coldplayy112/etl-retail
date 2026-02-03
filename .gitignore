@@ -1,0 +1,14 @@
+# --- Airflow Metadata (Local to each user) ---
+logs/*
+!logs/.gitkeep
+postgres_data/
+
+# --- Python & OS Junk ---
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+
+# --- Optional: If you want users to provide their own dags ---
+# dags/*
+# !dags/.gitkeep
