@@ -36,8 +36,12 @@ database: airflow
 
 ✅**Untuk cek warehouse (BigQuery):**
 
-1.\ Masuk ke docker-compose.yaml
-2. Pergi ke line 18 dan ubah variable 'your\_gcs\_bucket\_id' menjadi bucket\_id anda.
-3. Pergi ke line 20 dan ubah variable 'your\_gcp\_project\_id' menjadi project\_id anda.
-4. Masukan GCP Service Account JSON ke file google\_keys.json
-5. Save.
+1. Masuk ke docker-compose.yaml
+   
+3. Pergi ke line 18 dan ubah variable 'your\_gcs\_bucket\_id' menjadi bucket\_id anda.
+   
+5. Pergi ke line 20 dan ubah variable 'your\_gcp\_project\_id' menjadi project\_id anda.
+   
+7. Masukan GCP Service Account JSON ke file google\_keys.json
+   
+9. Save.
