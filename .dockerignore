@@ -1,0 +1,15 @@
+# --- Git ---
+.git
+.gitignore
+
+# --- Docker Environment ---
+.dockerignore
+docker-compose.yaml
+.env
+
+# --- Local Data ---
+logs/
+postgres_data/
+
+# --- Python ---
+__pycache__/
