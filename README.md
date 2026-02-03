@@ -1,6 +1,6 @@
-# etl-retail
+# ETL with Airflow and Google Big Query
 
-ETL with Airflow and Google Big Query
+
 
 
 
@@ -10,7 +10,7 @@ ETL with Airflow and Google Big Query
 
 
 
-**Berikut setup:**
+✅**Berikut setup:**
 1. Install Docker Desktop, dan pastikan WSL menyala secara otomatis saat docker desktop menyala.
 
 2\. Git clone <repo>. Pastikan untuk mengingat path tempat anda meng-clone repo.
@@ -21,7 +21,7 @@ ETL with Airflow and Google Big Query
 
 
 
-**Untuk meng-akses DB, dan melihat table:**
+✅**Untuk meng-akses DB, dan melihat table:**
 host: postgres (jika di dalam docker) atau localhost (jika di local)
 
 port: 5432
@@ -33,7 +33,7 @@ database: airflow
 
 
 
-**Untuk cek warehouse (BigQuery):**
+✅**Untuk cek warehouse (BigQuery):**
 
 1. Masuk ke docker-compose.yaml
 2. Pergi ke line 18 dan ubah variable 'your\_gcs\_bucket\_id' menjadi bucket\_id anda.
