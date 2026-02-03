@@ -15,20 +15,17 @@
 
 2. Git clone <repo>. Pastikan untuk mengingat path tempat anda meng-clone repo.
 
-3\. Cd ke file path, dan lakukan: docker compose up -d
+3. Cd ke file path, dan lakukan: docker compose up -d
 
-4\. Buka browser, dan akses http://localhost:8080 dengan kredensial (User: admin | Password: admin) 
+4. Buka browser, dan akses http://localhost:8080 dengan kredensial (User: admin | Password: admin) 
 
 
 
 ✅**Untuk meng-akses DB, dan melihat table:**
 host: postgres (jika di dalam docker) atau localhost (jika di local)
-
 port: 5432
-
 user: airflow
 password: airflow
-
 database: airflow
 
 
