@@ -22,15 +22,15 @@
 
 
 ✅**Untuk meng-akses DB, dan melihat table:**
-host: postgres (jika di dalam docker) atau localhost (jika di local)
+1. host: postgres (jika di dalam docker) atau localhost (jika di local)
 
-port: 5432
+2. port: 5432
 
-user: airflow
+3. user: airflow
 
-password: airflow
+4. password: airflow
 
-database: airflow
+5. database: airflow
 
 
 
