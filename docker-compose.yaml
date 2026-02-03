@@ -6,19 +6,30 @@ x-airflow-common: &airflow-common
     dockerfile: Dockerfile
   environment:
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CORE__TEST_CONNECTION: 'Enabled'
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__FERNET_KEY: 'p-8m6_X1_O_WjJ0G_Bf9f_m7vYv-6-8p2i8u992y0p8t07='
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    # --- GOOGLE CLOUD CONFIG ---
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/include/google_keys.json
+    GCS_BUCKET: 'your_gcs_bucket_id'
+    # --- AUTOMATIC CONNECTIONS ---
+    AIRFLOW_CONN_POSTGRES_DEFAULT: 'postgresql://airflow:airflow@postgres:5432/airflow'
+    AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?key_path=%2Fopt%2Fairflow%2Fgoogle_keys.json&project_id=your_gcp_project_id'
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
+    - ./include:/opt/airflow/include # Put your google_keys.json in this local folder
+  user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
-    - postgres
-    - redis
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
 
 services:
   postgres:
@@ -29,10 +40,20 @@ services:
       POSTGRES_DB: airflow
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:latest
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   airflow-init:
     <<: *airflow-common
@@ -40,7 +61,7 @@ services:
     command:
       - -c
       - |
-        airflow db init &&
+        airflow db migrate &&
         airflow users create \
           --username admin \
           --firstname Admin \
@@ -55,32 +76,22 @@ services:
     command: webserver
     ports:
       - "8080:8080"
-
-  airflow-apiserver:
-    <<: *airflow-common
-    command: apiserver
-
-  airflow-dag-processor:
-    <<: *airflow-common
-    command: dag-processor
+    restart: always
 
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
-
-  airflow-triggerer:
-    <<: *airflow-common
-    command: triggerer
+    restart: always
 
   airflow-worker:
     <<: *airflow-common
     command: celery worker
+    restart: always
 
-  airflow-flower:
+  airflow-triggerer:
     <<: *airflow-common
-    command: celery flower
-    ports:
-      - "5555:5555"
+    command: triggerer
+    restart: always
 
 volumes:
   postgres_data:
