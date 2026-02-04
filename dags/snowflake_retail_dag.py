@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook
-from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
+from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 import os
@@ -36,7 +36,7 @@ with DAG(
     'postgres_to_snowflake_hourly',
     default_args=default_args,
     description='Idempotent Sync from public.retail_transactions to Snowflake',
-    schedule_interval='@hourly',
+    schedule='@hourly',
     catchup=False
 ) as dag:
 
@@ -46,9 +46,9 @@ with DAG(
     )
 
     # This task ensures idempotency by clearing the target before loading
-    truncate_and_insert = SnowflakeOperator(
+    truncate_and_insert = SQLExecuteQueryOperator(
         task_id='truncate_and_insert_to_table',
-        snowflake_conn_id='snowflake',
+        conn_id='snowflake',
         sql="""
             TRUNCATE TABLE RETAIL_DB.RETAIL_STAGING.RETAIL_TRANSACTIONS;
             
