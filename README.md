@@ -1,4 +1,4 @@
-# ETL with Airflow and Google Big Query And Snowflake
+# ETL with Airflow and Snowflake And Google Big Query
 
 
 
