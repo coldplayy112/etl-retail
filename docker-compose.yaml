@@ -5,6 +5,7 @@ x-airflow-common: &airflow-common
     context: .
     dockerfile: Dockerfile
   environment:
+    &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__TEST_CONNECTION: 'Enabled'
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
@@ -13,6 +14,8 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__FERNET_KEY: 'p-8m6_X1_O_WjJ0G_Bf9f_m7vYv-6-8p2i8u992y0p8t07='
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    # --- SNOWFLAKE CONFIG ---
+    AIRFLOW_CONN_SNOWFLAKE: "snowflake://${SNOWFLAKE_USER}:${SNOWFLAKE_PASSWORD}@${SNOWFLAKE_ACCOUNT}/?warehouse=${SNOWFLAKE_WAREHOUSE}&database=${SNOWFLAKE_DATABASE}&schema=${SNOWFLAKE_SCHEMA}&role=ACCOUNTADMIN&account=${SNOWFLAKE_ACCOUNT}"
     # --- GOOGLE CLOUD CONFIG ---
     GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/include/google_keys.json
     GCS_BUCKET: 'your_gcs_bucket_id'
