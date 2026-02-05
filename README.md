@@ -1,4 +1,4 @@
-# ETL with Airflow and Google Big Query And Snowflake
+# ETL with Airflow and Snowflake And Google Big Query
 
 
 
@@ -32,9 +32,20 @@
 
 5. database: airflow
 
+✅**Untuk cek warehouse Snowflake**
 
+1. Masukkan kredensial ke airflow ui.
+   
+3. Buat table yang memiliki DDL logic yang sama dengan yang berada di file init.sql (Untuk create table)
+   
+4. Buat stage di snowflake (karena data dari Postgre akan ke stage terlebih dahulu)
+   
+5. Tes untuk trigger.
 
-✅**Untuk cek warehouse (BigQuery):**
+6. Cek hasil di Snowflake. 
+   
+   
+✅**Untuk cek warehouse (BigQuery): (Tidak disarankan)**
 
 1. Masuk ke docker-compose.yaml
    
