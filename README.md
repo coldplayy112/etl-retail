@@ -15,7 +15,7 @@
 
 2. Git clone <repo>. Pastikan untuk mengingat path tempat anda meng-clone repo.
 
-3. Cd ke file path, dan lakukan: docker compose up -d
+3. Cd ke file path, dan lakukan: docker compose up -d --build
 
 4. Buka browser, dan akses http://localhost:8080 dengan kredensial (User: admin | Password: admin) 
 
